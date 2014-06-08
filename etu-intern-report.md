@@ -49,24 +49,43 @@ Thanks for all the opportunities I've been given! :)
 - **Installing RHadoop package 安裝RHadoop**
     Briefly summary:
     1. Download the latest packages from [github][1]
+    
      ex: [plyrmr-0.3.0][2], [rmr2-3.1.1][3], [rhdfs-1.0.8][4], and [rhbase-1.2.0][5]
+
     2. Install the required packages and related dependency in R console:
+    
      `> install.packages( c('rJava', 'RJSONIO', 'itertools', 'digest', 'Rcpp','httr','functional','devtools', 'stringr', 'reshape2'))`
+     
     3. Export environment variable:
+    
      `~ export HADOOP_CMD=/usr/bin/hadoop` (my setting)
+     
      `~ export HADOOP_STREAMING=/usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.1.1.jar` (my setting)
+
     4. Install rmr package
+    
      `> sudo R CMD INSTALL rmr2_2.0.1.tar.gz `
+     
     5. Set System environment in R console: 
+    
      `Sys.setenv("HADOOP_HOME"="/opt/hadoopmr")` (my setting)
+     
      `Sys.setenv("HADOOP_CMD"="/opt/hadoopmr/bin/hadoop")` (my setting)
+     
      `Sys.setenv("HADOOP_STREAMING"="/opt/hadoopmr/hadoop-streaming-2.0.0-mr1-cdh4.0.1.jar")` (my setting)
+     
     6. Install rhdfs package:
+    
      `> sudo R CMD INSTALL rhdfs_1.0.5.tar.gz`
+     
     7. Load the packages: ( be sure to run `hdfs.init()` everytime)
+    
      `library(rmr2)`
+     
      `library(rhdfs)`
+     
      `hdfs.init()`
+     
     8. Reference: 
         - http://www.meetup.com/Learning-Machine-Learning-by-Example/pages/Installing_R_and_RHadoop/
         - http://cos.name/2013/03/rhadoop2-rhadoop/
@@ -238,8 +257,7 @@ use `QlikView` to visualize data.
 -O jdk-7u55-linux-x64.rpm
  > [root@localhost ~] yum install jdk-7u55-linux-x64.rpm
  
- 3. 新增`jps`指令
- 於`.bashrc`中加入`alias jps='/usr/java/jdk1.7.0_55/bin/bin/jps'`
+ 3. 新增`jps`指令， 於`.bashrc`中加入`alias jps='/usr/java/jdk1.7.0_55/bin/bin/jps'`
  > [root@localhost ~] vi ~/.bashrc
 
  4. 從 `Bigtop` 安裝 hadoop component (hadoop, pig, hive, zookeeper, hbase)
@@ -265,6 +283,7 @@ use `QlikView` to visualize data.
 view the [code][14] on github
 
 give arguents in command line:
+
 `/opt/hadoopmr/bin/hadoop jar [.jar] -D mapred.reduce.tasks=5 [input on HDFS] [output directory]`
 
 ----
@@ -277,16 +296,19 @@ study the [thesis][15] and try to write some R codes, using the _movielens_ as d
 **some preliminary results: 一些初步的成果**
 
 1. plot1: Users and the correspond ratings on specific items.
- `> qplot(user_factor,item_factor, data = ratings_100, colour=pref, size=pref)`
+
+  `> qplot(user_factor,item_factor, data = ratings_100, colour=pref, size=pref)`
 
  ![item_factor & user_factor][16]
 
 2. plot2: A biplot using **PCA** (principal component analysis) method to express the similarity of movies and characteristics.
- `> biplot(cfpca,choice=1:2)`
+ 
+  `> biplot(cfpca,choice=1:2)`
 
  ![pca_biplot][17]
 
 3. plot3: Project the result of PCA on a 2D plane, presenting the coordinate of each movie.
+
  `> ggplot(d,	aes(x=PC1,	y=PC2))	+  geom_point()	+	  geom_text(aes(label=id),            size=3,	vjust=-0.5)`
 
  ![item_based_projection][18]
