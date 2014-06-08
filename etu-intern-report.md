@@ -1,4 +1,4 @@
-**Etu 實習進度報告**	{#welcome}
+**Etu 實習進度報告**
 =====================
 
 Hi, This is my *overall report* for my internship in **Etu** during these 5 months.
@@ -81,7 +81,9 @@ Thanks for all the opportunities I've been given! :)
     7. Load the packages: ( be sure to run `hdfs.init()` everytime)
     
      `library(rmr2)`
+     
      `library(rhdfs)`
+     
      `hdfs.init()`
      
     8. Reference: 
