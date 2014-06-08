@@ -44,7 +44,7 @@ Thanks for all the opportunities I've been given! :)
 
 ----
 
-**RHadoop: rmr2, rhdfs, rhbase (2/24~3/9) **
+**RHadoop: rmr2, rhdfs, rhbase (2/24~3/9)**
 ---------
 - **Installing RHadoop package 安裝RHadoop**
     Briefly summary:
