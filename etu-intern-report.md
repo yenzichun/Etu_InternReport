@@ -81,9 +81,7 @@ Thanks for all the opportunities I've been given! :)
     7. Load the packages: ( be sure to run `hdfs.init()` everytime)
     
      `library(rmr2)`
-     
      `library(rhdfs)`
-     
      `hdfs.init()`
      
     8. Reference: 
