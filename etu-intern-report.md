@@ -29,7 +29,7 @@ Thanks for all the opportunities I've been given! :)
 - **Mapreduce Code:**
     - `Python` + `Hadoop Streaming` 
         - 使用 hadoop streaming 讓 user 可以用幾乎任何語言寫hadoop job
-        - 
+
     - **Virtual machine:** Cloudera Quick VM
     - **core:** key-value
     - **flow:** mapper > shuffle & sort > reducer
