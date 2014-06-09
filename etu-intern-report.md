@@ -153,7 +153,7 @@ Levels: AAPL GOOG
  
  RHadoop 的優點是，cover 掉原先需要 java developer 需要自己控制的 driver code ，讓 user 可以直接從 R 的 console 端設計 map-reduce 程式，以及存取 HDFS 跟 HBASE。
  
- 在 R 裡面寫 map reduce 有多簡單? 舉最著名的 `word count` 為例：
+ 在 R 裡面寫 map reduce 有多簡單? 舉最經典的 `word count` 為例：
  
   > mapper = function(k,v) {
     keyval(k,1) 
@@ -178,7 +178,7 @@ Levels: AAPL GOOG
  
  在研究Rhadoop的過程中，剛好也有機會參與某公司的 case 討論，而開始研究如何將線性以及指數迴歸問題拆解為 map reduce 的型式。找了許多資料，也做了諸多嘗試，雖然從結果來看算是並沒有成功實作出來，不過從問題的本質來看，指數迴歸模型本來就不適合用 hadoop 的 framework 來解。這也再次印證了所謂 **「 hadoop 並非萬靈丹」** 的真理。
  
- RHadoop 是一個尚未發展成熟的工具，所以在實際部屬和使用 RHadoop 的過程中，也中了不少招，像是看別人的範例 run 的好好的，不過自己卻怎麼試也跑不出來，最後才發現別人的 code 用的是尚未更新的版本，而新版卻早已經大幅更改了參數語法。我的解惑方法之一是直接殺到 package developer 的論壇上請教問題，能夠直接和所有在使用 RHadoop 的 developer 交流是一個很棒的經驗！
+ RHadoop 是一個尚未發展成熟的工具，所以在實際部屬和使用 RHadoop 的過程中，也中了不少招，像是看別人的範例 run 的好好的，不過自己卻怎麼試也跑不出來，最後才發現別人的 code 用的是尚未更新的版本，而新版卻早已經大幅更改了參數語法。我的解惑方法之一是直接到 package developer 的論壇上請教問題，能夠直接和所有在使用 RHadoop 的 developer 交流是一個很棒的經驗！
 
 
 
@@ -196,7 +196,7 @@ Levels: AAPL GOOG
 - **_user-based_** and **_item-based_**
 - problem field: Mostly using Collaborative Filtering for **_recommendation_**
 
-- view my code on my github
+- view my code on [my github][14]
 
 ----
 
@@ -234,7 +234,6 @@ Learn the basic knowledge of **_hadoop ecosystem_**, and manage to use them prac
  - script language
  - 指令用法整理
  
- > $ pig
 
  讀取baseball資料, position的資料型態為bag, bat 的資料型態為map
  >	grunt>	players = LOAD 'baseball' USING PigStorage ('\t') AS ( name:chararray, team:chararray, position:bag{t:(p:chararray)},bat:map[]);
@@ -292,6 +291,7 @@ use `QlikView` to visualize data.
 **L1-H HBase - NoSQL (3/27)**
 ---------
 - **key concept:** _Column Family_
+- use **_HareDB_**
 
 ----
 
@@ -341,7 +341,7 @@ use `QlikView` to visualize data.
 認證題目:
 「以新版的 MapReduce API 寫一個 M/R 程式，算出每天的成交量總合，並且使用 3 個 Reducer 將這三個交易日期範圍歸到同一個 Reducer 下。」
 
-view the code [on my github][17]
+view the code on [my github][17]
 
 give arguents in command line:
 
@@ -411,7 +411,7 @@ study the [thesis][18] and try to write some R codes, using the _movielens_ as d
   [11]: https://github.com/RevolutionAnalytics/RHadoop
   [12]: https://groups.google.com/forum/?hl=zh-TW#!forum/rhadoop
   [13]: https://groups.google.com/forum/#!topic/rhadoop/S02_moZEsI4
-  [14]: https://github.com/yenzichun/Etu_InternReport/
+  [14]: https://github.com/yenzichun/Etu_InternReport/blob/master/RHadoop/Collaborative_Filtering.R
   [15]: https://lh3.googleusercontent.com/7z0OTqBOoZSuvdVPYAZ7PgPC3_0pHAeLDzXZCGqrkoI=s500 "882109_10200805859548553_1933855539414159678_o.jpg"
   [16]: https://github.com/jazzwang/vagrant-hadoop/blob/master/bigtop-aws/ubuntu/provision.sh
   [17]: https://github.com/yenzichun/StockVolume
