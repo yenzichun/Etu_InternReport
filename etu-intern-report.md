@@ -25,7 +25,8 @@ Also it's my very first time using `Markdown language` and `StackEdit` to produc
     - what **hadoop** is ( an open sorce framework for processing big data)
     - the mechanism behind **HDFS** ( _data block, duplication, and fault tolerant_)
     - the philosophy of  **Mapreduce** ( _functional programming_)
-    hadoop 適合拿來解符合交換率跟結合率的問題 -> 不需要一直迭代(iteration)結果的問題
+    
+        > hadoop 適合拿來解符合交換率跟結合率的問題 -> 不需要一直迭代(iteration)結果的問題
  
 - **Mapreduce Code:**
     - `Python` + `Hadoop Streaming` 
@@ -41,7 +42,8 @@ Also it's my very first time using `Markdown language` and `StackEdit` to produc
             > run_mapreduce(){
                 hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mrl-cdh4.1.1.jar -mapper \$1 -reducer \$2 -file \$1 -file \$2 -input \$3 -output \$4
             }
-            alias hs = run_mapreduce
+            
+            > alias hs = run_mapreduce
 
     - **Virtual machine:** Cloudera Quick VM
     - **Core:** key-value
@@ -57,6 +59,7 @@ Also it's my very first time using `Markdown language` and `StackEdit` to produc
 - **Referance:** Hadoop Definition Guide, Udacity online resource
 
 - **感想:**
+
  透過在 Udacity 上完整學完5個章節的課程，讓我快速對寫 hadoop 程式的核心-- **map-reduce** 的計算邏輯有了初步的掌握。`hadoop streaming` 讓 user 可以用幾乎任何的程式語言撰寫 mapreduce 程式，我覺得以 python 寫 code 的好處是非常直覺，可以專注在演算邏輯上。透過 cloudera 提供的 quick VM 以及 python，讓完全沒有碰過 hadoop 的我對 hadoop HDFS 以及 map reduce 有了初步的認識。
 
 ----
@@ -155,10 +158,12 @@ Levels: AAPL GOOG
   > mapper = function(k,v) {
     keyval(k,1) 
   }
-  reducer = function(word, counts){
+  
+  > reducer = function(word, counts){
     keyval(word, sum(counts))
   }
-  mapreduce(
+  
+  > mapreduce(
     input = "word_count_data", #指定input data
     output = "word_count_result", #指定output 資料夾
     input.format = make.input.format("text", sep = " "), #切割input的方式
@@ -167,7 +172,7 @@ Levels: AAPL GOOG
     reduce = reducer
 	)
 
- 原先以java 需要寫上百行的程式碼現在只需要不到20行就可以搞定。
+ 原先以java 需要寫上百行的程式碼現在只需要不到簡簡單單搞定。
  
  一言以蔽之，`RHadoop`「**讓寫 R 的人也可以在 Hadoop 上開發 R 程式**」，不過思考程式演算邏輯時，概念上仍然要遵守 map reduce 的設計模式。
  
