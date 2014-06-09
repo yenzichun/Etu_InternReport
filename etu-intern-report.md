@@ -184,7 +184,7 @@ Levels: AAPL GOOG
 
 ----
 
-**Collaborative Filtering (3/10)**
+**Collaborative Filtering 演算法研究 (3/10~4/18)**
 ---------
 
 相較於指數迴歸問題，協同過濾(CF, Collaborative Filtering)便是一個經過驗證，適合用 hadoop 的演算法，甚至在 hadoop ecosystem 上還有專門做 machine learing 的 `mahout` 函式庫!
@@ -200,7 +200,7 @@ Levels: AAPL GOOG
 
 ----
 
-**L1-D Hadoop 第一天 (3/13)**
+**Etu Training L1-D: Hadoop 第一天 (3/13)**
 ---------
 Learn the basic knowledge of **_hadoop ecosystem_**, and manage to use them practically.
 
@@ -214,52 +214,26 @@ Learn the basic knowledge of **_hadoop ecosystem_**, and manage to use them prac
 
 	> sqoop import --connect jdbc:postgresql://etu-master/hive --username hive -P --table nyse_dividends --hive-import --hive-table etu203.nyse_dividends -m 1
 
- - arguments:
-
-    > **--connect < jdbc-uri >:** 	Specify JDBC connect string
-    > **--driver < class-name >:** 	Manually sprcify JDBC driver class to use
-    > **--help:**					Print usage instructions
-    > **--P:**						Read password from console
-    > **--password < password >:**	Set authentication passeord
-    > **--username < username >:**	Set authentication username
-    > **--verbose:**				Print more information while working
-    > **--table < table-name >:**	Table to read
-    > **--target-dir < dir >:**		HDFS destination dir
-    > **--hive-table:**			Specify target table name in Hive
-    > **--hive-import:**			Specify sqoop target to Hive
-    > **-m	< n >:**					Use n map tasks to import in parallel
+ - for further info please view the note on [my github][15]
 
 **Pig:**
 
  - script language
  - 指令用法整理
- 
+ - 以 map 結構定義 data schema
 
- 讀取baseball資料, position的資料型態為bag, bat 的資料型態為map
  >	grunt>	players = LOAD 'baseball' USING PigStorage ('\t') AS ( name:chararray, team:chararray, position:bag{t:(p:chararray)},bat:map[]);
 				
- 將position攤平 並從map中取得平均打擊率
+ FLATTEN function
  >	grunt>	pos = FOREACH players GENERATE name, FLATTEN(position) as position, bat#'batting_average' as batAvg;
 
- 濾掉沒有打擊率的紀錄
+ FILTER function
  >	grunt>	batters = FILTER pos BY batAvg IS NOT NULL;
 
- 依打擊/守備位置 grouping
+ GROUP BY function
  >	grunt>	byPos = GROUP batters BY position;
  
- 算出各打擊/守備位置的平均打擊率
- >	grunt>	battingAvg = FOREACH byPos GENERATE group, AVG(batters.batAvg);
- 
- 依平均打擊率做排序
- >	grunt>	team_batavg = ORDER battingAvg BY $1;
-	grunt>	DUMP team_batavg;
-	
- 將position攤平
- >	grunt>	pos = FOREACH players GENERATE name, FLATTEN(position) as position;
- 
- 只列出捕手 filter
- >	grunt>	catchers = FILTER pos BY posotion == 'Catcher';
-
+ - for further info please view the note on [my github][16]
 
 **Hive:** 
 
@@ -279,16 +253,17 @@ Learn the basic knowledge of **_hadoop ecosystem_**, and manage to use them prac
 	>hive> 	select symbol, volume from nyse_daily
 					where volume>1000000 limit 10;
 	
+ - for further info please view the note on [my github][17]
 
 ----
 
-**L1-V Data Visualization(3/20)**
+**Etu Trainng L1-V: Data Visualization(3/20)**
 ---------
 use `QlikView` to visualize data.
 
 ----
 
-**L1-H HBase - NoSQL (3/27)**
+**Etu Training L1-H: HBase - NoSQL (3/27)**
 ---------
 - **key concept:** _Column Family_
 - use **_HareDB_**
@@ -301,7 +276,7 @@ use `QlikView` to visualize data.
 
 ----
 
-**EHC 員工內部大賽**
+**EHC 員工內部大賽 (4/22)**
 ---------
 - 和喬巴一起參加 EHC 的員工內部競賽，在有限的時間內部屬 hadoop 以及其 component
 - **Testing Environment:** CentOS 6.5 minimal
@@ -327,8 +302,8 @@ use `QlikView` to visualize data.
 
 - An **exciting moment**!!!
 
- ![enter image description here][15]
-- **Referance:** [jazz vagrant-hadoop][16] on github
+ ![enter image description here][18]
+- **Referance:** [jazz vagrant-hadoop][19] on github
 
 ----
 
@@ -341,7 +316,7 @@ use `QlikView` to visualize data.
 認證題目:
 「以新版的 MapReduce API 寫一個 M/R 程式，算出每天的成交量總合，並且使用 3 個 Reducer 將這三個交易日期範圍歸到同一個 Reducer 下。」
 
-view the code on [my github][17]
+view the code on [my github][20]
 
 give arguents in command line:
 
@@ -352,7 +327,7 @@ give arguents in command line:
 **Data Visualization via Collaborative Filtering (5/25)**
 ---------
 
-study the [thesis][18] and try to write some R codes, using the _movielens_ as dataset
+study the [thesis][21] and try to write some R codes, using the _movielens_ as dataset
 
 **some preliminary results: 一些初步的成果**
 
@@ -360,19 +335,19 @@ study the [thesis][18] and try to write some R codes, using the _movielens_ as d
 
   `> qplot(user_factor,item_factor, data = ratings_100, colour=pref, size=pref)`
 
- ![item_factor & user_factor][19]
+ ![item_factor & user_factor][22]
 
 2. plot2: A biplot using **PCA** (principal component analysis) method to express the similarity of movies and characteristics.
  
   `> biplot(cfpca,choice=1:2)`
 
- ![pca_biplot][20]
+ ![pca_biplot][23]
 
 3. plot3: Project the result of PCA on a 2D plane, presenting the coordinate of each movie.
 
  `> ggplot(d,	aes(x=PC1,	y=PC2))	+  geom_point()	+	  geom_text(aes(label=id),            size=3,	vjust=-0.5)`
 
- ![item_based_projection][21]
+ ![item_based_projection][24]
 
 
 ----
@@ -389,6 +364,7 @@ study the [thesis][18] and try to write some R codes, using the _movielens_ as d
  - 3/15 SITCON 2014
  - 3/28 Etu ALL-hands Monthly, Mar.
  - 4/11~4/12 OSDC
+ - 4/22 Etu EHC 員工內部大賽
  - 4/29 中研院 陳昇瑋 研究員演講
  - 4/30 Etu ALL-hands Monthly, Apr.
  - 5/28 Etu All-hands Monthly, May.
@@ -412,10 +388,13 @@ study the [thesis][18] and try to write some R codes, using the _movielens_ as d
   [12]: https://groups.google.com/forum/?hl=zh-TW#!forum/rhadoop
   [13]: https://groups.google.com/forum/#!topic/rhadoop/S02_moZEsI4
   [14]: https://github.com/yenzichun/Etu_InternReport/blob/master/RHadoop/Collaborative_Filtering.R
-  [15]: https://lh3.googleusercontent.com/7z0OTqBOoZSuvdVPYAZ7PgPC3_0pHAeLDzXZCGqrkoI=s500 "882109_10200805859548553_1933855539414159678_o.jpg"
-  [16]: https://github.com/jazzwang/vagrant-hadoop/blob/master/bigtop-aws/ubuntu/provision.sh
-  [17]: https://github.com/yenzichun/StockVolume
-  [18]: http://hal.archives-ouvertes.fr/docs/00/67/33/30/PDF/visualCF.pdf
-  [19]: https://lh6.googleusercontent.com/JwDvKdwbpmrezwIDYjQ1hbP8fkH_MWPOMzyZMNvP1dQ=s500 "item&user_biplot.jpeg"
-  [20]: https://lh3.googleusercontent.com/_OIFCqtOg_rinSmKXrMdl0DLGF_UMjRdwxMo-mJVzHc=s500 "CFpca.jpeg"
-  [21]: https://lh5.googleusercontent.com/d4KwdqEV_viL3FmbaRnT9tpsjc70HbN2npSjLrvKohs=s500 "item_based_projection.jpeg"
+  [15]: https://github.com/yenzichun/Etu_InternReport/blob/master/Sqoop,%20Pig%20and%20Hive/sqoop.txt
+  [16]: https://github.com/yenzichun/Etu_InternReport/blob/master/Sqoop,%20Pig%20and%20Hive/pig.txt
+  [17]: https://github.com/yenzichun/Etu_InternReport/blob/master/Sqoop,%20Pig%20and%20Hive/hive.txt
+  [18]: https://lh3.googleusercontent.com/7z0OTqBOoZSuvdVPYAZ7PgPC3_0pHAeLDzXZCGqrkoI=s500 "882109_10200805859548553_1933855539414159678_o.jpg"
+  [19]: https://github.com/jazzwang/vagrant-hadoop/blob/master/bigtop-aws/ubuntu/provision.sh
+  [20]: https://github.com/yenzichun/StockVolume
+  [21]: http://hal.archives-ouvertes.fr/docs/00/67/33/30/PDF/visualCF.pdf
+  [22]: https://lh6.googleusercontent.com/JwDvKdwbpmrezwIDYjQ1hbP8fkH_MWPOMzyZMNvP1dQ=s500 "item&user_biplot.jpeg"
+  [23]: https://lh3.googleusercontent.com/_OIFCqtOg_rinSmKXrMdl0DLGF_UMjRdwxMo-mJVzHc=s500 "CFpca.jpeg"
+  [24]: https://lh5.googleusercontent.com/d4KwdqEV_viL3FmbaRnT9tpsjc70HbN2npSjLrvKohs=s500 "item_based_projection.jpeg"
