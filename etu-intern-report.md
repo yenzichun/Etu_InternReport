@@ -172,7 +172,7 @@ Levels: AAPL GOOG
     reduce = reducer
 	)
 
- 原先以java 需要寫上百行的程式碼現在只需要不到簡簡單單搞定。
+ 原先用 java 需要寫上百行的程式碼現在簡簡單單搞定。
  
  一言以蔽之，`RHadoop`「**讓寫 R 的人也可以在 Hadoop 上開發 R 程式**」，不過思考程式演算邏輯時，概念上仍然要遵守 map reduce 的設計模式。
  
@@ -196,7 +196,7 @@ Levels: AAPL GOOG
 - **_user-based_** and **_item-based_**
 - problem field: Mostly using Collaborative Filtering for **_recommendation_**
 
-- view my code on [my github][14]
+- view my code on my github
 
 ----
 
@@ -303,7 +303,8 @@ use `QlikView` to visualize data.
 
 **EHC 員工內部大賽**
 ---------
-- **Environment:** CentOS 6.5 minimal
+- 和喬巴一起參加 EHC 的員工內部競賽，在有限的時間內部屬 hadoop 以及其 component
+- **Testing Environment:** CentOS 6.5 minimal
 - **環境設定筆記:**
 
  1. 安裝`wget`
