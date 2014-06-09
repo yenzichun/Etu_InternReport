@@ -1,0 +1,59 @@
+Pig
+
+$ pig
+grunt>	players = LOAD 'baseball' USING PigStorage ('\t') AS ( name:chararray, team:chararray, position:bag{t:(p:chararray)},bat:map[]);
+#讀取baseball資料, position的資料型態為bag, bat 的資料型態為map
+grunt>	players = LOAD 'baseball' USING PigStorage('\t') AS ( 
+			name:chararray, 
+			team:chararray, 
+			position:bag{t:(p:chararray)}, 
+			bat:map[] 
+			); 
+			
+grunt>	teamBattingAvg = FOREACH players GENERATE name, team, bat#'batting_average' as batAvg;
+grunt>	batters = FILTER teamBattingAvg BY batAvg IS NOT NULL;
+grunt>	byTeam = GROUP batters BY team;
+grunt>	battingAvg = FOREACH byTeam GENERATE group, AVG(batters.batAvg);
+grunt>	battingAvgSorted = ORDER battingAvg BY $1;
+
+grunt>	a = load 'text.txt' using pigstorage() as (...)
+grunt>	b = limit a 10;
+grunt>	dump b;
+			
+#將position攤平 並從map中取得平均打擊率
+grunt>	pos = FOREACH players GENERATE name, FLATTEN(position) as position, bat#'batting_average' as batAvg;
+#濾掉沒有打擊率的紀錄
+grunt>	batters = FILTER pos BY batAvg IS NOT NULL;
+#依打擊/守備位置 grouping
+grunt>	byPos = GROUP batters BY position;
+#算出各打擊/守備位置的平均打擊率
+grunt>	battingAvg = FOREACH byPos GENERATE group, AVG(batters.batAvg);
+#依平均打擊率做排序
+grunt>	team_batavg = ORDER battingAvg BY $1;
+grunt>	DUMP team_batavg;
+
+#將position攤平
+grunt>	pos = FOREACH players GENERATE name, FLATTEN(position) as position;
+#只列出捕手 filter
+grunt>	catchers = FILTER pos BY posotion == 'Catcher';
+
+
+
+#Q2:讀取在  HDFS  上  baseball  的資料,以球隊做分類,並且總合該隊各球員的平均打擊率後,
+#依平均打擊率做排序(遞減),最後將結果儲存到  HDFS  上  (請用  team_batavg  做為儲存檔名) 
+	
+	#讀取baseball資料, position的資料型態為bag, bat 的資料型態為map
+	grunt>	players = LOAD 'baseball' USING PigStorage('\t') AS ( 
+				name:chararray, 
+				team:chararray, 
+				position:bag{t:(p:chararray)}, 
+				bat:map[] 
+				); 
+	grunt>	teamBattingAvg = FOREACH players GENERATE name, team, bat#'batting_average' as batAvg; #取得平均打擊率
+	grunt>	batters = FILTER teamBattingAvg BY batAvg IS NOT NULL;
+	grunt>	byTeam = GROUP batters BY team;
+	grunt>	battingAvg = FOREACH byTeam GENERATE group, AVG(batters.batAvg);
+	grunt>	teamBatAvgSorted = ORDER battingAvg BY $1;
+	grunt>	STORE teamBatAvgSorted INTO 'team_batAvg';	
+	
+

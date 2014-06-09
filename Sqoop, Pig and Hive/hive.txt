@@ -1,0 +1,28 @@
+Hive:
+
+	hive>	SELECT symbol, sum(volume) as sum FROM nyse_daily
+					WHERE tdate >= "2009-01-01" AND tdate <= "2009-06-30"
+					GROUP BY symbol
+					SORT BY sum DESC;
+					
+	hive>	select symbol, sum(volume) from nyse_daily
+					where tdate >= "2009-01-01" and tdate <= "2009-06-30"
+					group by symbol;
+	#ok				
+	hive> 	select symbol, volume from nyse_daily
+					where volume>1000000 limit 10;
+	
+Hive shell:
+	$ hive
+	hive>	create database etu203;
+				use etu203;
+				quit;
+	
+				
+#Q3.用hive讀取nyse_daily的交易資料 統計2009-01-01到2009-06-30有成交量的股票, 
+#用股票類別做分類再用成交量的總合作排序
+
+	hive>	SELECT symbol, sum(volume) as sum FROM nyse_daily
+					WHERE tdate >= "2009-01-01" AND tdate <= "2009-06-30"
+					GROUP BY symbol
+					SORT BY sum DESC;
