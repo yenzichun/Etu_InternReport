@@ -1,14 +1,12 @@
 **Etu 實習進度報告**
 =====================
 
-Hi, This is my *overall report* for my internship in **Etu** during these 5 months.
+Hi, This is my *overall report* for my internship in **Etu** during these 4 months.
 
 Also it's my very first time using `Markdown language` and `StackEdit` to produce documents, and I have to say, `StackEdit` helps me to organize my articles in a **rapid** and **well-organized** way. (Thanks **Jazz** for introducing me this powerful tool.)
 
-Thanks for all the opportunities I've been given! :)
-
 ----
-**Get familiar with EVA(Etu Virtual Appliance)**
+**Get familiar with EVA (Etu Virtual Appliance) (2/10~2/12)**
 --------
 - use **EVA** to deploy a 1+2 node Hadoop environment rapidly.
 - use web console on Etu Appliance
@@ -18,29 +16,48 @@ Thanks for all the opportunities I've been given! :)
 
 **Udacity: Intro to Hadoop & MapReduce (2/11~2/23)**
 ---------
+於 Udacity 網站上課學習 Hadoop & MapReduce 最基本的觀念。
+
 - **Big Data Intro:**
     Understand the basic knowledge of big data. (4V: Velocity, Variaty, Volume, Veracity)
 
 - **Hadoop, HDFS, and Mapreduce:**
     - what **hadoop** is ( an open sorce framework for processing big data)
-    - the mechanism behind **HDFS** (_data block, duplication, and fault tolerant_)
-    - the philosophy of  **Mapreduce** (_functional programming_, 符合交換率跟結合率的問題才適合用mapreduce解 -> 不需要一直迭代(iteration)結果的問題 )
-
+    - the mechanism behind **HDFS** ( _data block, duplication, and fault tolerant_)
+    - the philosophy of  **Mapreduce** ( _functional programming_)
+    hadoop 適合拿來解符合交換率跟結合率的問題 -> 不需要一直迭代(iteration)結果的問題
+ 
 - **Mapreduce Code:**
     - `Python` + `Hadoop Streaming` 
-        - 使用 hadoop streaming 讓 user 可以用幾乎任何語言寫hadoop job
+        - 使用 hadoop streaming 讓 user 可以用幾乎任何語言寫 hadoop job
+        
+         `~ hadoop jar [path/to/.jar] -mapper [mapper_file] -reducer [reducer_file] -file [mapper_file] -file [reducer_file] -input [input_file] -output [output_directory]`
+
+        - 在實際執行 hadoop job 前，可以先用小資料測試。 Pipeline in `terminal`:
+        
+         `~ cat testfile | ./mapper.py | sort | ./reducer.py`
+        
+        - or you can also set alias in `~/.bashrc` ex:
+            > run_mapreduce(){
+                hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mrl-cdh4.1.1.jar -mapper \$1 -reducer \$2 -file \$1 -file \$2 -input \$3 -output \$4
+            }
+            alias hs = run_mapreduce
 
     - **Virtual machine:** Cloudera Quick VM
-    - **core:** key-value
-    - **flow:** mapper > shuffle & sort > reducer
-    - **combiner:** 減少mapper & reducer間suffle的task loading
-    (Note: 當拿 reducer用作 combiner 時，reducer 的 output & input type 須一致，因為 combiner 的 output 是 reducer 的 input)
+    - **Core:** key-value
+    - **Flow:** mapper > shuffle & sort > reducer
+    - **Combiner:** 減少 mapper & reducer 間 suffle 的 task loading
+     ( Note: 當拿 reducer 用作 combiner 時，reducer 的 output & input type 須一致，因為 combiner 的 output 是 reducer 的 input)
     
 
 - **Mapreduce Design Patterns**
-    - **Prcatice:** analyse __*web-log data*__. ( Inverted index, url hits analysis)
+    - **Prcatice:** analyse __*web-log data*__. ( Filtering, Inverted index, URL hits analysis)
     - A pattern is a **proven solution** to a **recurring problem** in a **specific context**
+    - view the python code on my [github][1]
 - **Referance:** Hadoop Definition Guide, Udacity online resource
+
+- **感想:**
+ 透過在 Udacity 上完整學完5個章節的課程，讓我快速對寫 hadoop 程式的核心-- **map-reduce** 的計算邏輯有了初步的掌握。`hadoop streaming` 讓 user 可以用幾乎任何的程式語言撰寫 mapreduce 程式，我覺得以 python 寫 code 的好處是非常直覺，可以專注在演算邏輯上。透過 cloudera 提供的 quick VM 以及 python，讓完全沒有碰過 hadoop 的我對 hadoop HDFS 以及 map reduce 有了初步的認識。
 
 ----
 
@@ -48,9 +65,9 @@ Thanks for all the opportunities I've been given! :)
 ---------
 - **Installing RHadoop package 安裝RHadoop**
     Briefly summary:
-    1. Download the latest packages from [github][1]
+    1. Download the latest packages from [github][2]
     
-     ex: [plyrmr-0.3.0][2], [rmr2-3.1.1][3], [rhdfs-1.0.8][4], and [rhbase-1.2.0][5]
+     ex: [plyrmr-0.3.0][3], [rmr2-3.1.1][4], [rhdfs-1.0.8][5], and [rhbase-1.2.0][6]
 
     2. Install the required packages and related dependency in R console:
     
@@ -92,11 +109,11 @@ Thanks for all the opportunities I've been given! :)
 
 - **Problem Solving:**
  
- 參考 [r-and-hadoop-整合初體驗][6] 文章，使用RHadoop計算股市累積移動平均(CMA)，得到一樣的錯誤結果。
+ 參考 [r-and-hadoop-整合初體驗][7] 文章，使用RHadoop計算股市累積移動平均(CMA)，得到一樣的錯誤結果。
 
- ![the incorrect result][7]
+ ![the incorrect result][8]
 
- 檢查code以後，發現是因為[參考範例][8]中的 `map` function 程式碼有誤， 在 rmr package 中已經 handle input format 的整理，所以不需要自行split strings
+ 檢查code以後，發現是因為[參考範例][9]中的 `map` function 程式碼有誤， 在 rmr package 中已經 handle input format 的整理，所以不需要自行split strings
 
  >  map <- function(k,v) {
  >      fields <- unlist(strsplit(v, ","))
@@ -117,20 +134,64 @@ Levels: AAPL GOOG
  \[1] 689.030 466.795 428.875 200.055  88.315 197.055  85.045  73.565  64.035 314.960
 
  **NOTE**: The result wasn't as sorted as it supposed to be, because I didn't use `reduce` function.
+ 
+- view the code on [my github][10] 
 
-- Reference: 
-    - The [github][9] page of the RHadoop developer
-    - RHadoop on [google forum][10]
-    - [My post on RHadoop forum][11] : 我於RHadoop論壇上的發問
+- **Reference:** 
+    - The [github][11] page of the RHadoop developer
+    - RHadoop on [google forum][12]
+    - [My post on RHadoop forum][13] : 我於RHadoop論壇上的發問
+
+- **心得:**
+
+ 原本以為 **R + Hadoop** 會是一個必殺武器，只要安裝了套件就可以將 R 強大的繪圖以及統計引擎直接 implement 到hadoop上，不過實際接觸之後才知道不是這麼一回事...
+
+ RHadoop 為一個R的套件，由三個子套件 `rhdfs` , `rmr`, `rhbase` 組成，其底層以 `hadoop streaming` 的方式為 R 提供了一個與 hadoop 串接的接口。
+ 
+ RHadoop 的優點是，cover 掉原先需要 java developer 需要自己控制的 driver code ，讓 user 可以直接從 R 的 console 端設計 map-reduce 程式，以及存取 HDFS 跟 HBASE。
+ 
+ 在 R 裡面寫 map reduce 有多簡單? 舉最著名的 `word count` 為例：
+ 
+  > mapper = function(k,v) {
+    keyval(k,1) 
+  }
+  reducer = function(word, counts){
+    keyval(word, sum(counts))
+  }
+  mapreduce(
+    input = "word_count_data", #指定input data
+    output = "word_count_result", #指定output 資料夾
+    input.format = make.input.format("text", sep = " "), #切割input的方式
+	output.format = "text",
+    map = mapper,
+    reduce = reducer
+	)
+
+ 原先以java 需要寫上百行的程式碼現在只需要不到20行就可以搞定。
+ 
+ 一言以蔽之，`RHadoop`「**讓寫 R 的人也可以在 Hadoop 上開發 R 程式**」，不過思考程式演算邏輯時，概念上仍然要遵守 map reduce 的設計模式。
+ 
+ 在研究Rhadoop的過程中，剛好也有機會參與某公司的 case 討論，而開始研究如何將線性以及指數迴歸問題拆解為 map reduce 的型式。找了許多資料，也做了諸多嘗試，雖然從結果來看算是並沒有成功實作出來，不過從問題的本質來看，指數迴歸模型本來就不適合用 hadoop 的 framework 來解。這也再次印證了所謂 **「 hadoop 並非萬靈丹」** 的真理。
+ 
+ RHadoop 是一個尚未發展成熟的工具，所以在實際部屬和使用 RHadoop 的過程中，也中了不少招，像是看別人的範例 run 的好好的，不過自己卻怎麼試也跑不出來，最後才發現別人的 code 用的是尚未更新的版本，而新版卻早已經大幅更改了參數語法。我的解惑方法之一是直接殺到 package developer 的論壇上請教問題，能夠直接和所有在使用 RHadoop 的 developer 交流是一個很棒的經驗！
+
+
 
 ----
 
 **Collaborative Filtering (3/10)**
 ---------
+
+相較於指數迴歸問題，協同過濾(CF, Collaborative Filtering)便是一個經過驗證，適合用 hadoop 的演算法，甚至在 hadoop ecosystem 上還有專門做 machine learing 的 `mahout` 函式庫!
+
+因此練習以 `R + Hadoop` 實作協同過濾演算法，便是這一階段最主要的課題。
+
 - study the algorithm of **_Collaborative Filtering_**.
     - similarity: calculate the corelation (distance) between two object.
 - **_user-based_** and **_item-based_**
 - problem field: Mostly using Collaborative Filtering for **_recommendation_**
+
+- view my code on [my github][14]
 
 ----
 
@@ -223,12 +284,6 @@ use `QlikView` to visualize data.
 
 ----
 
-**Project with WeatherRisk**
----------
-
-
-----
-
 **L1-H HBase - NoSQL (3/27)**
 ---------
 - **key concept:** _Column Family_
@@ -266,8 +321,8 @@ use `QlikView` to visualize data.
 
 - An **exciting moment**!!!
 
- ![enter image description here][12]
-- **Referance:** [jazz vagrant-hadoop][13] on github
+ ![enter image description here][15]
+- **Referance:** [jazz vagrant-hadoop][16] on github
 
 ----
 
@@ -280,7 +335,7 @@ use `QlikView` to visualize data.
 認證題目:
 「以新版的 MapReduce API 寫一個 M/R 程式，算出每天的成交量總合，並且使用 3 個 Reducer 將這三個交易日期範圍歸到同一個 Reducer 下。」
 
-view the [code][14] on github
+view the code [on my github][17]
 
 give arguents in command line:
 
@@ -291,7 +346,7 @@ give arguents in command line:
 **Data Visualization via Collaborative Filtering (5/25)**
 ---------
 
-study the [thesis][15] and try to write some R codes, using the _movielens_ as dataset
+study the [thesis][18] and try to write some R codes, using the _movielens_ as dataset
 
 **some preliminary results: 一些初步的成果**
 
@@ -299,54 +354,62 @@ study the [thesis][15] and try to write some R codes, using the _movielens_ as d
 
   `> qplot(user_factor,item_factor, data = ratings_100, colour=pref, size=pref)`
 
- ![item_factor & user_factor][16]
+ ![item_factor & user_factor][19]
 
 2. plot2: A biplot using **PCA** (principal component analysis) method to express the similarity of movies and characteristics.
  
   `> biplot(cfpca,choice=1:2)`
 
- ![pca_biplot][17]
+ ![pca_biplot][20]
 
 3. plot3: Project the result of PCA on a 2D plane, presenting the coordinate of each movie.
 
  `> ggplot(d,	aes(x=PC1,	y=PC2))	+  geom_point()	+	  geom_text(aes(label=id),            size=3,	vjust=-0.5)`
 
- ![item_based_projection][18]
+ ![item_based_projection][21]
 
+
+----
+
+**Summary**
+--------
 
 ----
 
 **Event List**
 ---------
 
-> - 2/20 Etu ALL-hands Monthly, Feb.
-> - 3/15 SITCON 2014
-> - 3/28 Etu ALL-hands Monthly, Mar.
-> - 4/11~4/12 OSDC
-> - 4/29 中研院 陳昇瑋 研究員演講
-> - 4/30 Etu ALL-hands Monthly, Apr.
-> - 5/28 Etu All-hands Monthly, May.
+ - 2/20 Etu ALL-hands Monthly, Feb.
+ - 3/15 SITCON 2014
+ - 3/28 Etu ALL-hands Monthly, Mar.
+ - 4/11~4/12 OSDC
+ - 4/29 中研院 陳昇瑋 研究員演講
+ - 4/30 Etu ALL-hands Monthly, Apr.
+ - 5/28 Etu All-hands Monthly, May.
 
 ----
 
 > Written with [StackEdit](https://stackedit.io/).
 
 
-  [1]: https://github.com/RevolutionAnalytics/RHadoop/wiki/Downloads
-  [2]: http://goo.gl/UhrcbF
-  [3]: http://goo.gl/UpK2y9
+  [1]: https://github.com/yenzichun/Etu_InternReport/tree/master/hadoop_streaming
+  [2]: https://github.com/RevolutionAnalytics/RHadoop/wiki/Downloads
+  [3]: http://goo.gl/UhrcbF
   [4]: http://goo.gl/UpK2y9
-  [5]: https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.2.0.tar.gz?raw=true
-  [6]: http://michaelhsu.tw/2013/05/01/r-and-hadoop-%E5%88%9D%E9%AB%94%E9%A9%97/
-  [7]: http://i.imgur.com/JN1SV1c.png
-  [8]: https://github.com/alexholmes/hadoop-book/blob/master/src/main/R/ch8/stock_cma_rmr.R
-  [9]: https://github.com/RevolutionAnalytics/RHadoop
-  [10]: https://groups.google.com/forum/?hl=zh-TW#!forum/rhadoop
-  [11]: https://groups.google.com/forum/#!topic/rhadoop/S02_moZEsI4
-  [12]: https://lh3.googleusercontent.com/7z0OTqBOoZSuvdVPYAZ7PgPC3_0pHAeLDzXZCGqrkoI=s500 "882109_10200805859548553_1933855539414159678_o.jpg"
-  [13]: https://github.com/jazzwang/vagrant-hadoop/blob/master/bigtop-aws/ubuntu/provision.sh
-  [14]: https://github.com/yenzichun/StockVolume
-  [15]: http://hal.archives-ouvertes.fr/docs/00/67/33/30/PDF/visualCF.pdf
-  [16]: https://lh6.googleusercontent.com/JwDvKdwbpmrezwIDYjQ1hbP8fkH_MWPOMzyZMNvP1dQ=s500 "item&user_biplot.jpeg"
-  [17]: https://lh3.googleusercontent.com/_OIFCqtOg_rinSmKXrMdl0DLGF_UMjRdwxMo-mJVzHc=s500 "CFpca.jpeg"
-  [18]: https://lh5.googleusercontent.com/d4KwdqEV_viL3FmbaRnT9tpsjc70HbN2npSjLrvKohs=s500 "item_based_projection.jpeg"
+  [5]: http://goo.gl/UpK2y9
+  [6]: https://github.com/RevolutionAnalytics/rhbase/blob/master/build/rhbase_1.2.0.tar.gz?raw=true
+  [7]: http://michaelhsu.tw/2013/05/01/r-and-hadoop-%E5%88%9D%E9%AB%94%E9%A9%97/
+  [8]: http://i.imgur.com/JN1SV1c.png
+  [9]: https://github.com/alexholmes/hadoop-book/blob/master/src/main/R/ch8/stock_cma_rmr.R
+  [10]: https://github.com/yenzichun/Etu_InternReport/tree/master/RHadoop
+  [11]: https://github.com/RevolutionAnalytics/RHadoop
+  [12]: https://groups.google.com/forum/?hl=zh-TW#!forum/rhadoop
+  [13]: https://groups.google.com/forum/#!topic/rhadoop/S02_moZEsI4
+  [14]: https://github.com/yenzichun/Etu_InternReport/
+  [15]: https://lh3.googleusercontent.com/7z0OTqBOoZSuvdVPYAZ7PgPC3_0pHAeLDzXZCGqrkoI=s500 "882109_10200805859548553_1933855539414159678_o.jpg"
+  [16]: https://github.com/jazzwang/vagrant-hadoop/blob/master/bigtop-aws/ubuntu/provision.sh
+  [17]: https://github.com/yenzichun/StockVolume
+  [18]: http://hal.archives-ouvertes.fr/docs/00/67/33/30/PDF/visualCF.pdf
+  [19]: https://lh6.googleusercontent.com/JwDvKdwbpmrezwIDYjQ1hbP8fkH_MWPOMzyZMNvP1dQ=s500 "item&user_biplot.jpeg"
+  [20]: https://lh3.googleusercontent.com/_OIFCqtOg_rinSmKXrMdl0DLGF_UMjRdwxMo-mJVzHc=s500 "CFpca.jpeg"
+  [21]: https://lh5.googleusercontent.com/d4KwdqEV_viL3FmbaRnT9tpsjc70HbN2npSjLrvKohs=s500 "item_based_projection.jpeg"
