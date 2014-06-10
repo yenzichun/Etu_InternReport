@@ -450,7 +450,7 @@ Etu Appliance 是一個年輕的產品， R&D 們常常都是為了解決一個�
 > Written with [StackEdit](https://stackedit.io/).
 
 
-  [1]: https://github.com/yenzichun/Etu_InternReport/tree/master/hadoop_streaming
+  [1]: https://github.com/yenzichun/Etu_InternReport/tree/master/Hadoop%20Streaming
   [2]: https://github.com/RevolutionAnalytics/RHadoop/wiki/Downloads
   [3]: http://goo.gl/UhrcbF
   [4]: http://goo.gl/UpK2y9
