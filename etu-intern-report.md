@@ -435,6 +435,7 @@ Etu Appliance 是一個年輕的產品， R&D 們常常都是為了解決一個�
 
  - 2/20 Etu ALL-hands Monthly, Feb.
  - 3/15 SITCON 2014
+ - 3/17 MLDM Monday meetup - RHadoop 
  - 3/28 Etu ALL-hands Monthly, Mar.
  - 4/11~4/12 OSDC 2014 (Open Source Developers' Conference 2014)
  - 4/22 Etu EHC 員工內部大賽
