@@ -3,7 +3,7 @@
 
 Hi, This is my *overall report* for my internship in **Etu** during these 4 months.
 
-Also it's my very first time using `Markdown language` and `StackEdit` to produce documents, and I have to say, `StackEdit` helps me to organize my articles in a **rapid** and **well-organized** way. (Thanks **Jazz** for introducing me this powerful tool.)
+Also it's my very first time using `Markdown language` and `StackEdit` to produce documents, and I have to say, `StackEdit` helps me to organize my articles in a **rapid** and **well-organized** way. (Thanks **_Jazz_** for introducing me this powerful tool.)
 
 **Table of Context:**
 
@@ -30,13 +30,16 @@ Also it's my very first time using `Markdown language` and `StackEdit` to produc
     - the mechanism behind **HDFS** ( _data block, duplication, and fault tolerant_)
     - the philosophy of  **Mapreduce** ( _functional programming_)
     
-        > hadoop 適合拿來解符合交換率跟結合率的問題 -> 不需要一直迭代(iteration)結果的問題
+        > hadoop 適合拿來解符合交換率跟結合率的問題
+
+        > 不適合需要一直迭代(iteration)結果的問題
  
 - **Mapreduce Code:**
     - `Python` + `Hadoop Streaming` 
         - 使用 hadoop streaming 讓 user 可以用幾乎任何語言寫 hadoop job
         
-         `~ hadoop jar [path/to/.jar] -mapper [mapper_file] -reducer [reducer_file] -file [mapper_file] -file [reducer_file] -input [input_file] -output [output_directory]`
+         `~ hadoop jar [path/to/.jar] -mapper [mapper_file] -reducer [reducer_file]
+        -file [mapper_file] -file [reducer_file] -input [input_file] -output [output_directory]`
 
         - 在實際執行 hadoop job 前，可以先用小資料測試。 Pipeline in `terminal`:
         
@@ -116,11 +119,16 @@ Also it's my very first time using `Markdown language` and `StackEdit` to produc
 
 - **Problem Solving:**
  
- 參考 [r-and-hadoop-整合初體驗][7] 文章，使用RHadoop計算股市累積移動平均(CMA)，得到一樣的錯誤結果。
+ 參考 [r-and-hadoop-整合初體驗][7] 文章，使用RHadoop計算股市累積移動平均(CMA)，得到一樣的錯誤結果。(資料loss?)
 
- ![the incorrect result][8]
+  > $key
+ > \[1] AAPL GOOG
+Levels: AAPL GOOG
 
- 檢查code以後，發現是因為[參考範例][9]中的 `map` function 程式碼有誤， 在 rmr package 中已經 handle input format 的整理，所以不需要自行split strings
+ >$val
+ \[1] 88.315 428.875
+
+ 檢查code以後，發現是因為[參考範例][9]中的 `map function` 程式碼有誤， 在 rmr package 中已經 handle input format 的整理，所以不需要自行split strings
 
  >  map <- function(k,v) {
  >      fields <- unlist(strsplit(v, ","))
@@ -176,13 +184,13 @@ Levels: AAPL GOOG
     reduce = reducer
 	)
 
- 原先用 java 需要寫上百行的程式碼現在簡簡單單搞定。
+ 原先用 java 需要寫上百行的程式碼現在簡簡單單搞定。( 然而因為使用的是 `hadoop streaming` 的方式，必須付出效能的代價 )
  
- 一言以蔽之，`RHadoop`「**讓寫 R 的人也可以在 Hadoop 上開發 R 程式**」，不過思考程式演算邏輯時，概念上仍然要遵守 map reduce 的設計模式。
+ 一言以蔽之，`RHadoop`「**讓寫 R 的人也可以在 Hadoop 上開發 R 程式**」，不過思考程式演算邏輯時，概念上仍然要遵守 map reduce 的設計模式。( 所以並不像原先想像中的，可以直接把 R 做的統計分析丟進去用 )
  
  在研究Rhadoop的過程中，剛好也有機會參與某公司的 case 討論，而開始研究如何將線性以及指數迴歸問題拆解為 map reduce 的型式。找了許多資料，也做了諸多嘗試，雖然從結果來看算是並沒有成功實作出來，不過從問題的本質來看，指數迴歸模型本來就不適合用 hadoop 的 framework 來解。這也再次印證了所謂 **「 hadoop 並非萬靈丹」** 的真理。
  
- RHadoop 是一個尚未發展成熟的工具，所以在實際部屬和使用 RHadoop 的過程中，也中了不少招，像是看別人的範例 run 的好好的，不過自己卻怎麼試也跑不出來，最後才發現別人的 code 用的是尚未更新的版本，而新版卻早已經大幅更改了參數語法。我的解惑方法之一是直接到 package developer 的論壇上請教問題，能夠直接和所有在使用 RHadoop 的 developer 交流是一個很棒的經驗！
+ RHadoop 是一個尚未發展成熟的工具，所以在實際部屬和使用 RHadoop 的過程中，也中了不少招，像是看別人的範例 run 的好好的，不過自己卻怎麼試也跑不出來，最後才發現別人的 code 用的是尚未更新的版本，而新版卻早已經大幅更改了參數語法。解決問題的方法之一是直接到 package developer 的論壇上請教問題，能夠直接和所有在使用 RHadoop 的 developer 交流是一個很棒的經驗！
 
 
 ----
@@ -274,6 +282,7 @@ Learn the basic knowledge of **_hadoop ecosystem_**, and manage to use them prac
 **Etu Trainng L1-V: Data Visualization(3/20)**
 ---------
 use `QlikView` to visualize data.
+
 Honestly, despite learning a new fancy visualization tools, nothing really special... :P
 
 ----
@@ -300,11 +309,12 @@ Honestly, despite learning a new fancy visualization tools, nothing really speci
 **Udacity: Intro to Computer Science (4/16~4/28)**
 ---------
 fowllow the course and improve **_python_** skill
+
 目前進展到chapter 3
 
 ----
 
-**EHC 員工內部大賽 (4/22)**
+**EHC Etu員工內部大賽 (4/22)**
 ---------
 - 和`喬巴`一起參加 EHC 的員工內部競賽，在有限的時間內部屬 hadoop 以及其 component
 - **Testing Environment:** CentOS 6.5 minimal
@@ -331,7 +341,10 @@ fowllow the course and improve **_python_** skill
 - An **exciting moment**!!!
 
  ![enter image description here][19]
-- **Referance:** [jazz vagrant-hadoop][20] on github
+- **Referance:** [jazz vagrant-hadoop on github][20]
+- **感想:**
+
+　這次的 EHC Etu內部競賽，喬巴學長找我一起參加，我們必須在時間之內，完成一個 hadoop 叢集的部屬，建立不同的使用者賦予相對應的權限並測試。這當中牽涉到許多對於 linux 系統的操作熟悉度（一開始的原始環境甚至連java都沒裝！），不過我跟學長分工，參考 jazz 大大賽前釋出的 script 檔，一行一行執行測試去了解其意義。雖然最後以8分鐘飲恨只得到第二名，不過仍然是一次很棒的經驗！
 
 ----
 
@@ -341,47 +354,79 @@ fowllow the course and improve **_python_** skill
 - Know the difference between **new** and **old** API
 - Use **Combiner**, **partitioner**, **toolrunner**, and **distrubuted cache**
 
-認證題目:
+- 認證題目:
 「以新版的 MapReduce API 寫一個 M/R 程式，算出每天的成交量總合，並且使用 3 個 Reducer 將這三個交易日期範圍歸到同一個 Reducer 下。」
 
-view the code on [my github][21]
+- view the code on [my github][21]
 
-give arguents in command line:
+- give arguents in command line:
 
-`/opt/hadoopmr/bin/hadoop jar [.jar] -D mapred.reduce.tasks=5 [input on HDFS] [output directory]`
+ `/opt/hadoopmr/bin/hadoop jar [.jar] -D mapred.reduce.tasks=5 [input on HDFS] [output directory]`
 
 ----
 
 **Data Visualization via Collaborative Filtering (5/25)**
 ---------
 
-study [this paper][22] and try to write some R codes, using the _movielens_ as test dataset
+ - **目的：**因為協同過濾演算法計算出來的結果並無法直接被驗證，希望能透過資料視覺化 ( Data Visualization ) 的方法，將結果呈現。
 
-**some preliminary results: 一些初步的成果**
+ - study [this paper][22] and try to write some R codes, using the _movielens_ as test dataset
 
-1. plot1: Users and the correspond ratings on specific items.
+ - **main approach:** 
+  - PCA (Principle Component Analysis) 主成分分析
+  - CCA (Curvilinear Component Analysis)
+
+ - **some preliminary results: 一些初步的成果**
+
+  plot1: Users and the correspond ratings on specific items.
 
   `> qplot(user_factor,item_factor, data = ratings_100, colour=pref, size=pref)`
 
  ![item_factor & user_factor][23]
 
-2. plot2: A biplot using **PCA** (principal component analysis) method to express the similarity of movies and characteristics.
+
+ plot2: A biplot using **PCA** (principal component analysis) method to express the similarity of movies and characteristics.
  
   `> biplot(cfpca,choice=1:2)`
 
  ![pca_biplot][24]
 
-3. plot3: Project the result of PCA on a 2D plane, presenting the coordinate of each movie.
+  plot3: Project the result of PCA on a 2D plane, presenting the coordinate of each movie.
 
  `> ggplot(d,	aes(x=PC1,	y=PC2))	+  geom_point()	+	  geom_text(aes(label=id),            size=3,	vjust=-0.5)`
 
  ![item_based_projection][25]
 
+ - **感想:**
 
+  透過 `R` 做資料視覺化_( Data Visualization )_ 的好處是，R 原生提供了強大的統計及繪圖引擎。而透過 PCA 主成分分析，可以從眾多物件(user or item)中找出影響最關鍵的屬性，並投射在2維的平面上，這能夠幫助我們用更直覺的方法觀察資料，從中找到商業價值。(例如：消費者的群聚分布 or 推薦效果的分析)
+  
+  作為研究，我覺得這是個滿有趣的題目，不過從產品的角度來說，如果能夠做到即時顯示結果，就會大大提升價值；從支援面來看，我覺得目前這方法提供了另外一種驗證計算結果的方式：例如當對協同過濾產生的結果有疑慮時，就可以透過這樣的方法查看結果是否符合預期。
+  
 ----
 
 **Summary**
 --------
+
+進來 Etu 的 R&D 部門實習，讓我有機會直接看到一個產品的進程，以及了解一個產品背後究竟有多少人絞盡腦汁在開發、維護。
+
+實習的過程中，除了熟悉自家產品、了解 hadoop 之外，我也藉此機會好好學習了 `linux` 以及利用 `git` 進行協同合作。而除了上述的專業技術之外，我覺得很重要的是學習到用 **_hacker思維_**來解決問題。
+
+Etu Appliance 是一個年輕的產品， R&D 們常常都是為了解決一個特定的問題，而去 Survey solution，彼此交流後再進一步改進，我覺得對於一個創新的學習型組織，這是對於往後能否成功非常關鍵的能力。大家都不藏私，在遇到問題是都會想辦法一起解決，這是我在這裡觀察到很棒的地方，也是自己非常嚮往的工作氣氛。
+
+記得我一開始因為覺得好像都幫不上忙、不知道要做甚麼覺得很苦惱，不過後來Eefy、Randy、Dixen等其他同事告訴我，其實一切都要端看**「你想解決什麼問題」**。在資訊領域的技術實在太多了，每個人專精的東西都不一樣，所以應該是要找到一個有熱情的點切入，然後盡量鑽研，目標是別人問不倒的程度。這跟我在學校接受到的教育很不一樣，**學校總是概括把所有工具都教給學生，結果就是最後程度都只停留在「hello world」的階段**；然而辦公室裡面的人每個人都有自己的獨門武功，這讓我體會到培養自己**「不可取代性」**的重要性，而基本上也就是我這4個月以來一直在做的事 -- self-learning。
+
+除了平時的研究之外，令我印象最深刻的便是每個月的 **All-hands meeting** ，因為 RD 和 BD 部門可以藉由這個機會，彼此交流，如此 RD 才能開發出真正好用的產品，BD 也能更因為了解公司產品而更能說服客戶。每次參加 All-hands meeting，我無時無刻都在問自己：**「如果我是BD人員，現在該怎麼表達需求才能讓 RD 知道產品離客戶想要的還有差距？」**、**「如果我是RD人員，要怎樣避免陷入『我開發的產品一定很好』的迷思」**，我覺得這樣的換位思考讓我可以不是單單從某一方的角度思考，如此在做決定的時候才能考量得更全面、更周延。
+
+在 Etu 短短4個月的時間，我有幸跟大家一起工作，如果說真的有甚麼貢獻，大概就是對 `RHadoop` 有一番透徹的研究及認識，雖然並沒辦法直接為團隊跟產品做出貢獻，不過 讓我很感動的是，大家都沒有把我當成外人、也很願意指導我。永遠忘記不了當初剛進來我在練習部屬 hadoop 遇到問題時，Jazz半跪在我座位旁很有耐心地陪我解決的情景...
+
+世界因為 Big data 正在產生巨大的改變，我認為能夠利用大量的資料和處理技術，創造出以前無法想像的服務，才是巨量資料能帶給我們的真正價值。而 Etu 的產品，就是以此為願景而誕生的。
+
+最後仍然要感謝給予我機會的 Fred, James，還有所有幫助過我的同事們，來 Etu 實習是我人生中非常寶貴的經歷！
+
+謝謝大家。
+
+
 
 ----
 
@@ -391,11 +436,13 @@ study [this paper][22] and try to write some R codes, using the _movielens_ as t
  - 2/20 Etu ALL-hands Monthly, Feb.
  - 3/15 SITCON 2014
  - 3/28 Etu ALL-hands Monthly, Mar.
- - 4/11~4/12 OSDC
+ - 4/11~4/12 OSDC 2014 (Open Source Developers' Conference 2014)
  - 4/22 Etu EHC 員工內部大賽
  - 4/29 中研院 陳昇瑋 研究員演講
  - 4/30 Etu ALL-hands Monthly, Apr.
  - 5/28 Etu All-hands Monthly, May.
+ - 5/31 EHC final
+ - 6/12 Big Data Taiwan 2014
 
 ----
 
